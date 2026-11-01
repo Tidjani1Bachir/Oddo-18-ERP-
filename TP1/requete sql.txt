@@ -1,0 +1,48 @@
+Vérifier les contacts
+SELECT id, name, email, supplier_rank, customer_rank
+FROM res_partner
+ORDER BY id DESC
+LIMIT 5;
+
+
+
+
+################################################
+Vérifier le produit et ses prix
+
+SELECT
+    id,
+    name AS nom_produit,
+    list_price AS prix_vente,
+    detailed_type AS type_produit
+FROM product_template
+WHERE name ILIKE '%PC Portable MasterIL%';
+
+#################################################"
+Vérifier les utilisateurs
+SELECT
+    u.id AS user_id,
+    u.login,
+    p.name AS partner_name,
+    u.partner_id
+FROM res_users u
+JOIN res_partner p
+    ON u.partner_id = p.id
+WHERE u.login IN (
+    'k.achat@techdistri.com',
+    's.vente@techdistri.com'
+);
+
+#####################################"
+
+Vérifier le mouvement de stock
+SELECT
+    m.name,
+    m.product_uom_qty,
+    m.state
+FROM stock_move m
+JOIN product_product p
+    ON m.product_id = p.id
+JOIN product_template t
+    ON p.product_tmpl_id = t.id
+WHERE t.name LIKE '%PC Portable MasterIL%';
